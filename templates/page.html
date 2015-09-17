@@ -1,0 +1,58 @@
+<title>PDF Generator</title>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+<style>
+body {
+    font-family:'Helvetica';
+    line-height:1.4;
+    font-size:18px;
+    margin:20px;
+}
+
+#return > a {
+    display:block;
+    font-size:24px;
+}
+
+button {
+    font-weight:bold;
+    font-size:20px;
+    margin:20px;
+}
+
+</style>
+
+
+Title: <input id='title' type='text' value='The title' />
+<br>
+# of Lines: <input id='lines' type='text' value=25 />
+<br>
+# of Circles: <input id='circles' type='text' value=49 />
+<br>
+
+<button id='submit'>Generate PDF</button>
+
+<div id='return'></div>
+
+<script>
+$(function() {
+    $('#submit').on('click', function() {
+        $.ajax({
+            url:'/',
+            type:'POST',
+            data:{
+                title:$('#title').val(),
+                lines:$('#lines').val(),
+                circles:$('#circles').val()
+            },
+            success:function(data) {
+                console.info(data);
+                $("<a target='_blank'  href='" + data + "'>" + data + "</a>").appendTo('#return');
+            },
+            error:function() {
+                $("<a>Error</a>").appendTo('#return');
+                }
+        });
+    });
+});
+</script>
